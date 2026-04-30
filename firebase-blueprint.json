@@ -1,0 +1,67 @@
+{
+  "entities": {
+    "Campaign": {
+      "title": "Campaign",
+      "description": "Marketing campaign for popups and banners",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "cta": { "type": "string" },
+        "ctaLink": { "type": "string" },
+        "type": { "type": "string", "enum": ["popup", "banner", "hero", "notification"] },
+        "rules": { "type": "array" },
+        "theme": { "type": "object" },
+        "priority": { "type": "integer" },
+        "status": { "type": "string", "enum": ["active", "paused", "draft"] }
+      },
+      "required": ["title", "description", "cta"]
+    },
+    "Expert": {
+      "title": "Expert",
+      "description": "Professional practitioner profile (CA/CS/Lawyer)",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["CA", "CS", "Lawyer"] },
+        "membershipId": { "type": "string" },
+        "experience": { "type": "integer" },
+        "bio": { "type": "string" },
+        "price": { "type": "string" },
+        "tags": { "type": "array" },
+        "rating": { "type": "number" },
+        "isVerified": { "type": "boolean" },
+        "avatar": { "type": "string" },
+        "slug": { "type": "string" }
+      },
+      "required": ["name", "role", "membershipId"]
+    },
+    "UserInteraction": {
+      "title": "User Interaction",
+      "description": "Logs when a user interacts with a campaign",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "campaignId": { "type": "string" },
+        "action": { "type": "string", "enum": ["view", "click", "close"] },
+        "timestamp": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "/campaigns/{campaignId}": {
+      "schema": "Campaign",
+      "description": "Store all marketing campaigns"
+    },
+    "/experts/{expertId}": {
+      "schema": "Expert",
+      "description": "Professional profiles for CAs, CSs, and Lawyers"
+    },
+    "/user_interactions/{interactionId}": {
+      "schema": "UserInteraction",
+      "description": "Track user engagement for A/B testing and personalization"
+    }
+  }
+}
